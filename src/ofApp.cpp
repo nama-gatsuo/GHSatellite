@@ -1,16 +1,17 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
 	ofBackground(0);
 	sphere = ofMesh::icosphere(10);
 	receiver.setup(7402);
 	ofSetFrameRate(60);
+	ofEnableDepthTest();
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-	
+void ofApp::update() {
+
 	while (receiver.hasWaitingMessages()) {
 		ofxOscMessage msg;
 		receiver.getNextMessage(msg);
@@ -19,7 +20,7 @@ void ofApp::update(){
 		string event = msg.getArgAsString(0);
 		string actor = msg.getArgAsString(1);
 		string repo = msg.getArgAsString(2);
-		ofLogNotice() << event;
+		//ofLogNotice() << event;
 		sp.add(event, actor, repo);
 	}
 
@@ -28,16 +29,21 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
+
+	fb.begin();
 	cam.begin();
 	sphere.draw(OF_MESH_WIREFRAME);
-	sp.draw();
+	sp.draw(bShow);
 	cam.end();
+	fb.end();
 
-	ofDrawBitmapString("FPS: " + ofToString(ofGetElapsedTimef()), 10, 10);
+	fb.draw();
+
+	ofDrawBitmapString("FPS: " + ofToString(ofGetFrameRate()), 10, 10);
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
+void ofApp::keyPressed(int key) {
+	if (key == 's') bShow = !bShow;
 }

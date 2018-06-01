@@ -3,8 +3,9 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 #include "SatelliteParticles.h"
+#include "FeedbackBuffer.h"
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 
 public:
 	void setup();
@@ -19,4 +20,7 @@ private:
 
 	SatelliteParticles sp;
 	ofxOscReceiver receiver;
+	FeedbackBuffer fb;
+
+	bool bShow = false;
 };
