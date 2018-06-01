@@ -1,0 +1,1 @@
+{"version":3,"sources":["server.js"],"names":["s","Sender","init"],"mappings":";;AAAA;;;;;;AAEA,IAAIA,IAAI,IAAIC,gBAAJ,EAAR;AACAD,EAAEE,IAAF","file":"server.js","sourcesContent":["import Sender from './sender'\r\n\r\nlet s = new Sender();\r\ns.init();\r\n"]}
