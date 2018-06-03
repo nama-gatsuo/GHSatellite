@@ -22,17 +22,13 @@ struct Trail {
 			float x = t - i * 0.02;
 			float y = a * x * x - a / 8.;
 			
-			vec3 t1 = (x + 0.001) * xAxis + y * yAxis;
-			vec3 t2 = (x - 0.001) * xAxis + y * yAxis;
+			vec3 t1 = (x + 0.003) * xAxis + y * yAxis;
+			vec3 t2 = (x - 0.003) * xAxis + y * yAxis;
 
 			vertexArray.push_back(t1);
 			vertexArray.push_back(t2);
 		}
-		
-		
-
 		vbo.setVertexData(vertexArray.data(), vertexArray.size(), GL_DYNAMIC_DRAW);
-		
 		
 	}
 	void draw() const {
@@ -68,12 +64,14 @@ struct Particle {
 
 		time++;
 		if (time < MAX_LIFE) {
-			float x = (float)time / MAX_LIFE * 2. - 1.; // t
+			fTime = (float)time / MAX_LIFE;
+			float x = fTime * 2. - 1.;
 			float y = a * x * x - a / 8.;
 
 			pos = x * xAxis + y * yAxis;
 
 			trail.update(x);
+			col.a = sin(fTime * PI);
 
 		} else { 
 			isDead = true;
@@ -84,6 +82,7 @@ struct Particle {
 
 	bool isDead = false;
 	int time = 0;
+	float fTime = 0.;
 
 	vec3 pos;
 
@@ -151,23 +150,27 @@ public:
 		return v;
 	}
 
-	void drawTrails() const {
-		//trailShader.begin();
+	void drawTrails(const ofCamera& cam) const {
+		ofEnableBlendMode(OF_BLENDMODE_ADD);
+		trailShader.begin();
+		trailShader.setUniform1f("farClip", cam.getFarClip());
+		trailShader.setUniform1f("nearClip", cam.getNearClip());
+
 		for (auto it = ps.begin(); it != ps.end(); it++) {
+			trailShader.setUniform1f("life", it->get()->fTime);
 			it->get()->trail.draw();
 		}
-		//trailShader.end();
+		trailShader.end();
+		ofDisableBlendMode();
 	}
 
 	void drawNames() const {
-		ofSetColor(128);
 		for (auto it = ps.begin(); it != ps.end(); it++) {
-			ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
-			ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
-			/*string s = ofToString(it->get()->pos.x) + ",";
-			s += ofToString(it->get()->pos.y) + ",";
-			s += ofToString(it->get()->pos.z);
-			ofDrawBitmapString(s, it->get()->pos + vec3(10, 20, 10));*/
+			float l = it->get()->fTime;
+			if (l > 0.3 && l < 0.6) {
+				ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
+				ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
+			}
 		}
 	}
 
@@ -201,15 +204,19 @@ public:
 
 	}
 
-	void draw(bool bShow) {
+	void draw(const ofCamera& cam, bool bShow) {
+		ofEnableAlphaBlending();
 		shader.begin();
+		shader.setUniform1f("farClip", cam.getFarClip());
+		shader.setUniform1f("nearClip", cam.getNearClip());
+
 		vbo.draw(GL_POINTS, 0, pm.size());
 		shader.end();
 		
-		pm.drawTrails();
+		pm.drawTrails(cam);
 
 		if (bShow) pm.drawNames();
-
+		ofDisableAlphaBlending();
 	}
 
 private:
