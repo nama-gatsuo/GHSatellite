@@ -351,3 +351,4 @@ ASALocalRun/
 
 *.sln
 *.vcxproj*
+*.exp

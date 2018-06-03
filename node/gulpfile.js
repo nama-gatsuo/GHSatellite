@@ -15,5 +15,7 @@ gulp.task('server', function(){
         // .pipe(concat('server.js'))
         .pipe(babel({ presets: ['es2015'] }))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./server'));
+        .pipe(gulp.dest('./dist'));
 });
+
+gulp.task('default', ['server']);

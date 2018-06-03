@@ -30,7 +30,8 @@ export default class Sender {
     init() {
         setInterval(() => { this.req(this.url); }, this.req_interval);
         setTimeout(() => { this.dequeue(); }, 2000);
-        console.log('running...')
+        console.log('running...');
+        console.log('Stop: ctrl + c')
     }
 
     async req(url) {
