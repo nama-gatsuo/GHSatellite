@@ -1,9 +1,11 @@
 # GHSatellite
+## About
+
 ## Dependency
 Tested on
 * OS: Windows 10 Home ver.1803
 * Node.js v8.11.1
-* openFrameworks
+* openFrameworks 0.10.0
     * master banch on github at [this commit](https://github.com/openframeworks/openFrameworks/tree/c274c7fb51b4ae0552cd4cdb00475458aeeb610a)
     * with Viual Studio 2017(v141)
 
