@@ -31,14 +31,11 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw() {
 
-	fb.begin();
 	cam.begin();
 	sphere.draw(OF_MESH_WIREFRAME);
 	sp.draw(bShow);
 	cam.end();
-	fb.end();
-
-	fb.draw();
+	
 
 	ofDrawBitmapString("FPS: " + ofToString(ofGetFrameRate()), 10, 10);
 }

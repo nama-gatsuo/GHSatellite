@@ -5,8 +5,52 @@
 
 using namespace glm;
 
-struct Particle {
+struct Trail {
+	Trail() {}
+	Trail(const vec3& xAxis, const vec3& yAxis, float a) {
+		this->xAxis = xAxis;
+		this->yAxis = yAxis;
+		this->a = a;
+		count = 0;
+	}
 
+	void update(float t) {
+		
+		vertexArray.clear();
+
+		for (int i = 0; i < 20; i++) {
+			float x = t - i * 0.02;
+			float y = a * x * x - a / 8.;
+			
+			vec3 t1 = (x + 0.001) * xAxis + y * yAxis;
+			vec3 t2 = (x - 0.001) * xAxis + y * yAxis;
+
+			vertexArray.push_back(t1);
+			vertexArray.push_back(t2);
+		}
+		
+		
+
+		vbo.setVertexData(vertexArray.data(), vertexArray.size(), GL_DYNAMIC_DRAW);
+		
+		
+	}
+	void draw() const {
+		
+		vbo.draw(GL_TRIANGLE_STRIP, 0, vertexArray.size());
+
+	}
+
+	vec3 xAxis; vec3 yAxis;
+	float a;
+	ofVbo vbo;
+	vector<vec3> vertexArray;
+	int count;
+};
+
+
+struct Particle {
+	using Ptr = shared_ptr<Particle>;
 	Particle(float rx, float ry, float rz, float a) {
 
 		this->a = a;
@@ -16,18 +60,23 @@ struct Particle {
 
 		xAxis = m * vec4(1, 0., 0., 0.) * 3000. / a;
 		yAxis = m * vec4(0., 1, 0., 0.) * 300.;
+
+		trail = Trail(xAxis, yAxis, a);
 	}
 
 	bool update() {
 
 		time++;
-		if (time > MAX_LIFE) isDead = true;
-
-		if (!isDead) {
+		if (time < MAX_LIFE) {
 			float x = (float)time / MAX_LIFE * 2. - 1.; // t
 			float y = a * x * x - a / 8.;
 
 			pos = x * xAxis + y * yAxis;
+
+			trail.update(x);
+
+		} else { 
+			isDead = true;
 		}
 
 		return isDead;
@@ -45,15 +94,20 @@ struct Particle {
 	ofFloatColor col;
 	string user;
 	string repo;
-
+	Trail trail;
 };
 
 class ParticleManager {
 public:
+
+	ParticleManager() {
+		trailShader.load("shader/trail");
+	}
+
 	void update() {
 
 		for (auto it = ps.begin(); it != ps.end();) {
-			if (it->update()) it = ps.erase(it);
+			if (it->get()->update()) it = ps.erase(it);
 			else it++;
 		}
 
@@ -73,42 +127,55 @@ public:
 		else if (event == "PullRequestReviewComment") c.set(0.9, 1., 0.1);
 		else c.set(0.4);
 
-		Particle p(ofRandom(0, 30), ofRandom(0, 30), ofRandom(0, 360), ofRandom(2, 5));
-		p.col = c;
-		p.repo = repo;
-		p.user = actor;
+		auto p = std::make_shared<Particle>(ofRandom(0, 30), ofRandom(0, 30), ofRandom(0, 360), ofRandom(2, 5));
+		p->col = c;
+		p->repo = repo;
+		p->user = actor;
 
 		ps.push_back(p);
 
 	}
 
-	vector<vec3> getPos() {
+	vector<vec3> getPos() const {
 		vector<vec3> v;
 		for (auto it = ps.begin(); it != ps.end(); it++) {
-			v.push_back(it->pos);
+			v.push_back(it->get()->pos);
 		}
 		return v;
 	}
-	vector<ofFloatColor> getCol() {
+	vector<ofFloatColor> getCol() const {
 		vector<ofFloatColor> v;
 		for (auto it = ps.begin(); it != ps.end(); it++) {
-			v.push_back(it->col);
+			v.push_back(it->get()->col);
 		}
 		return v;
 	}
 
-	void draw() {
+	void drawTrails() const {
+		//trailShader.begin();
+		for (auto it = ps.begin(); it != ps.end(); it++) {
+			it->get()->trail.draw();
+		}
+		//trailShader.end();
+	}
+
+	void drawNames() const {
 		ofSetColor(128);
 		for (auto it = ps.begin(); it != ps.end(); it++) {
-			ofDrawLine(it->pos, it->pos + vec3(10, 20, 10));
-			ofDrawBitmapString(it->user, it->pos + vec3(10, 20, 10));
+			ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
+			ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
+			/*string s = ofToString(it->get()->pos.x) + ",";
+			s += ofToString(it->get()->pos.y) + ",";
+			s += ofToString(it->get()->pos.z);
+			ofDrawBitmapString(s, it->get()->pos + vec3(10, 20, 10));*/
 		}
 	}
 
 	int size() const { return ps.size(); }
 
 private:
-	vector<Particle> ps;
+	vector<Particle::Ptr> ps;
+	ofShader trailShader;
 };
 
 class SatelliteParticles {
@@ -139,7 +206,9 @@ public:
 		vbo.draw(GL_POINTS, 0, pm.size());
 		shader.end();
 		
-		if (bShow) pm.draw();
+		pm.drawTrails();
+
+		if (bShow) pm.drawNames();
 
 	}
 
@@ -148,6 +217,4 @@ private:
 
 	ofShader shader;
 	ofVbo vbo;
-
-
 };
