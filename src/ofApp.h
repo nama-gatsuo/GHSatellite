@@ -16,7 +16,7 @@ public:
 
 private:
 	ofEasyCam cam;
-	GHSphere sphere;
+	shared_ptr<GHSphere> sphere;
 
 	SatelliteParticles sp;
 	ofxOscReceiver receiver;

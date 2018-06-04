@@ -1,114 +1,41 @@
 #pragma once
 #include "ofMain.h"
-
-#define MAX_LIFE 500
-
-using namespace glm;
-
-struct Trail {
-	Trail() {}
-	Trail(const vec3& xAxis, const vec3& yAxis, float a) {
-		this->xAxis = xAxis;
-		this->yAxis = yAxis;
-		this->a = a;
-		count = 0;
-	}
-
-	void update(float t) {
-		
-		vertexArray.clear();
-
-		for (int i = 0; i < 20; i++) {
-			float x = t - i * 0.02;
-			float y = a * x * x - a / 8.;
-			
-			vec3 t1 = (x + 0.003) * xAxis + y * yAxis;
-			vec3 t2 = (x - 0.003) * xAxis + y * yAxis;
-
-			vertexArray.push_back(t1);
-			vertexArray.push_back(t2);
-		}
-		vbo.setVertexData(vertexArray.data(), vertexArray.size(), GL_DYNAMIC_DRAW);
-		
-	}
-	void draw() const {
-		
-		vbo.draw(GL_TRIANGLE_STRIP, 0, vertexArray.size());
-
-	}
-
-	vec3 xAxis; vec3 yAxis;
-	float a;
-	ofVbo vbo;
-	vector<vec3> vertexArray;
-	int count;
-};
-
-
-struct Particle {
-	using Ptr = shared_ptr<Particle>;
-	Particle(float rx, float ry, float rz, float a) {
-
-		this->a = a;
-
-		mat4 m = mat4();
-		m = rotate(rx, vec3(1., 0., 0.)) * rotate(ry, vec3(0., 1., 0.)) * m;
-
-		xAxis = m * vec4(1, 0., 0., 0.) * 3000. / a;
-		yAxis = m * vec4(0., 1, 0., 0.) * 300.;
-
-		trail = Trail(xAxis, yAxis, a);
-	}
-
-	bool update() {
-
-		time++;
-		if (time < MAX_LIFE) {
-			fTime = (float)time / MAX_LIFE;
-			float x = fTime * 2. - 1.;
-			float y = a * x * x - a / 8.;
-
-			pos = x * xAxis + y * yAxis;
-
-			trail.update(x);
-			col.a = sin(fTime * PI);
-
-		} else { 
-			isDead = true;
-		}
-
-		return isDead;
-	}
-
-	bool isDead = false;
-	int time = 0;
-	float fTime = 0.;
-
-	vec3 pos;
-
-	vec3 xAxis;
-	vec3 yAxis;
-	float a;
-
-	ofFloatColor col;
-	string user;
-	string repo;
-	Trail trail;
-};
+#include "Particle.h"
 
 class ParticleManager {
 public:
 
 	ParticleManager() {
 		trailShader.load("shader/trail");
+
+		arrowShader.load("shader/arrow.vert", "shader/arrow.frag", "shader/arrow.geom");
+		arrowShader.setGeometryInputType(GL_POINTS);
+		arrowShader.setGeometryOutputCount(12);
+		arrowShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
 	}
 
 	void update() {
 
+		vector<vec3> arrowPosArray;
+		vector<ofFloatColor> arrowColArray;
+
 		for (auto it = ps.begin(); it != ps.end();) {
-			if (it->get()->update()) it = ps.erase(it);
-			else it++;
+			if (it->get()->update()) {
+				it = ps.erase(it);
+			} else {
+
+				auto& a = it->get()->arrow;
+				if (a.isVisible()) {
+					arrowPosArray.push_back(a.pos);
+					arrowColArray.push_back(a.col);
+				}
+
+				it++;
+			}
 		}
+
+		arrowPoints.setVertexData(arrowPosArray.data(), arrowPosArray.size(), GL_DYNAMIC_DRAW);
+		arrowPoints.setColorData(arrowColArray.data(), arrowColArray.size(), GL_DYNAMIC_DRAW);
 
 	}
 
@@ -151,6 +78,7 @@ public:
 	}
 
 	void drawTrails(const ofCamera& cam) const {
+		//ofDisableDepthTest();
 		ofEnableBlendMode(OF_BLENDMODE_ADD);
 		trailShader.begin();
 		trailShader.setUniform1f("farClip", cam.getFarClip());
@@ -162,6 +90,7 @@ public:
 		}
 		trailShader.end();
 		ofDisableBlendMode();
+		//ofEnableDepthTest();
 	}
 
 	void drawNames() const {
@@ -174,11 +103,23 @@ public:
 		}
 	}
 
+	void drawArrows(const ofCamera& cam) const {
+		
+		arrowShader.begin();
+		arrowShader.setUniform1f("farClip", cam.getFarClip());
+		arrowShader.setUniform1f("nearClip", cam.getNearClip());
+
+		arrowPoints.draw(GL_POINTS, 0, arrowPoints.getNumVertices());
+		arrowShader.end();
+	}
+
 	int size() const { return ps.size(); }
 
 private:
 	vector<Particle::Ptr> ps;
+	ofShader arrowShader;
 	ofShader trailShader;
+	ofVbo arrowPoints;
 };
 
 class SatelliteParticles {
@@ -214,6 +155,7 @@ public:
 		shader.end();
 		
 		pm.drawTrails(cam);
+		pm.drawArrows(cam);
 
 		if (bShow) pm.drawNames();
 		ofDisableAlphaBlending();

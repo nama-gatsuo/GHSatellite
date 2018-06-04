@@ -1,8 +1,10 @@
 #version 400
 
-flat in vec3 vColor;
-in float vDepth;
-in vec4 vPos;
+in struct Vert {
+    vec3 color;
+    float depth;
+    vec3 pos;
+} vert;
 
 out vec4 outputColor;
 
@@ -16,9 +18,9 @@ vec3 calcFlatNormal(vec3 posInViewSpace){
 
 void main() {
 
-    vec3 n = calcFlatNormal(vPos.xyz);
+    vec3 n = calcFlatNormal(vert.pos);
     vec3 l = normalize(vec3(0.5, 1.0, 0.5));
-    vec3 c = vColor * clamp(dot(n, l), 0.3, 1.0);
-
+    vec3 c = vert.color * clamp(dot(n, l), 0.1, 1.0);
+    
     outputColor = vec4(c, 1.);
 }

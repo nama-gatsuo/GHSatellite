@@ -6,6 +6,8 @@ void ofApp::setup() {
 	receiver.setup(7402);
 	ofSetFrameRate(60);
 	ofEnableDepthTest();
+
+	sphere = make_shared<GHSphere>();
 }
 
 //--------------------------------------------------------------
@@ -24,14 +26,14 @@ void ofApp::update() {
 	}
 
 	sp.update();
-
+	sphere->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
 
 	cam.begin();
-	sphere.draw(cam);
+	sphere->draw(cam);
 	sp.draw(cam, bShow);
 	cam.end();
 	
