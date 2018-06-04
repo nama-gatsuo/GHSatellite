@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 	ofBackground(0);
-	sphere = ofMesh::icosphere(50., 2);
 	receiver.setup(7402);
 	ofSetFrameRate(60);
 	ofEnableDepthTest();
@@ -32,7 +31,7 @@ void ofApp::update() {
 void ofApp::draw() {
 
 	cam.begin();
-	sphere.draw(OF_MESH_WIREFRAME);
+	sphere.draw(cam);
 	sp.draw(cam, bShow);
 	cam.end();
 	

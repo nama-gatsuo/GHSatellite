@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 #include "SatelliteParticles.h"
-#include "FeedbackBuffer.h"
+#include "GHSphere.h"
 
 class ofApp : public ofBaseApp {
 
@@ -16,11 +16,10 @@ public:
 
 private:
 	ofEasyCam cam;
-	ofVboMesh sphere;
+	GHSphere sphere;
 
 	SatelliteParticles sp;
 	ofxOscReceiver receiver;
-	FeedbackBuffer fb;
-
+	
 	bool bShow = false;
 };
