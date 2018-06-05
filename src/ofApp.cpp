@@ -8,6 +8,7 @@ void ofApp::setup() {
 	ofEnableDepthTest();
 
 	sphere = make_shared<GHSphere>();
+	cam.init();
 }
 
 //--------------------------------------------------------------
@@ -27,6 +28,7 @@ void ofApp::update() {
 
 	sp.update();
 	sphere->update();
+	cam.update();
 }
 
 //--------------------------------------------------------------
@@ -36,7 +38,6 @@ void ofApp::draw() {
 	sphere->draw(cam);
 	sp.draw(cam, bShow);
 	cam.end();
-	
 
 	ofDrawBitmapString("FPS: " + ofToString(ofGetFrameRate()), 10, 10);
 }

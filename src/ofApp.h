@@ -4,6 +4,7 @@
 #include "ofxOsc.h"
 #include "SatelliteParticles.h"
 #include "GHSphere.h"
+#include "StateCam.h"
 
 class ofApp : public ofBaseApp {
 
@@ -15,7 +16,7 @@ public:
 	void keyPressed(int key);
 
 private:
-	ofEasyCam cam;
+	StateCam cam;
 	shared_ptr<GHSphere> sphere;
 
 	SatelliteParticles sp;

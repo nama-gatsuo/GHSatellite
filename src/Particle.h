@@ -61,6 +61,7 @@ struct Particle {
 	ofFloatColor col;
 	string user;
 	string repo;
+	string event;
 
 	Trail trail;
 	Arrow arrow;
