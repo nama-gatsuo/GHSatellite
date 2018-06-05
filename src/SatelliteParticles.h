@@ -57,6 +57,7 @@ public:
 		p->col = c;
 		p->repo = repo;
 		p->user = actor;
+		p->event = event;
 
 		ps.push_back(p);
 
@@ -94,12 +95,28 @@ public:
 	}
 
 	void drawNames() const {
+
 		for (auto it = ps.begin(); it != ps.end(); it++) {
+			
+			ofSetColor(255);
 			float l = it->get()->fTime;
+			
 			if (l > 0.3 && l < 0.6) {
 				ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
 				ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
+
 			}
+
+			auto& a = it->get()->arrow;
+			if (a.isVisible()) {
+				
+				ofDrawBitmapString(">> " +it->get()->repo, a.pos + vec3(2, 6, 0));
+				ofSetColor(a.col);
+				ofDrawBitmapString(it->get()->event, a.pos + vec3(2, 2, 0));
+				
+			}
+
+
 		}
 	}
 
