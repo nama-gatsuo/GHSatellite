@@ -1,6 +1,7 @@
 #pragma once
 #include "ofMain.h"
 #include "Particle.h"
+#include "Palette.h"
 
 class ParticleManager {
 public:
@@ -39,20 +40,8 @@ public:
 
 	}
 
-	void add(const string& event, const string& actor, const string& repo) {
-
-		ofFloatColor c;
-		if (event == "Push") c.set(.3, 1., 0.5);
-		else if (event == "Create") c.set(0.3, 1., 0.5);
-		else if (event == "IssueComment") c.set(1., 0.2, 0.5);
-		else if (event == "PullRequest") c.set(0.9, 1., 0.1);
-		else if (event == "Issues") c.set(1.0, 0.8, 0.5);
-		else if (event == "Watch") c.set(0.9, 1., 0.1);
-		else if (event == "Delete") c.set(0.9, 1., 0.1);
-		else if (event == "Fork") c.set(0.9, 1., 0.1);
-		else if (event == "PullRequestReviewComment") c.set(0.9, 1., 0.1);
-		else c.set(0.4);
-
+	void add(const string& event, const string& actor, const string& repo, const ofFloatColor& c) {
+		
 		auto p = std::make_shared<Particle>(ofRandom(0, 30), ofRandom(0, 30), ofRandom(0, 360), ofRandom(2, 5));
 		p->col = c;
 		p->repo = repo;
@@ -96,6 +85,8 @@ public:
 
 	void drawNames() const {
 
+		//auto& font = Palette::instance().noto_sans_light;
+
 		for (auto it = ps.begin(); it != ps.end(); it++) {
 			
 			ofSetColor(255);
@@ -103,6 +94,10 @@ public:
 			
 			if (l > 0.3 && l < 0.6) {
 				ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
+				vec3 p = it->get()->pos + vec3(10, 20, 10);
+
+				//font.drawString(it->get()->user, p.x, p.y);
+
 				ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
 
 			}
@@ -110,7 +105,7 @@ public:
 			auto& a = it->get()->arrow;
 			if (a.isVisible()) {
 				
-				ofDrawBitmapString(">> " +it->get()->repo, a.pos + vec3(2, 6, 0));
+				//ofDrawBitmapString(">> " +it->get()->repo, a.pos + vec3(2, 6, 0));
 				ofSetColor(a.col);
 				ofDrawBitmapString(it->get()->event, a.pos + vec3(2, 2, 0));
 				
@@ -156,9 +151,9 @@ public:
 		
 	}
 
-	void add(const string& event, const string& actor, const string& repo) {
+	void add(const string& event, const string& actor, const string& repo, const ofFloatColor& c) {
 
-		pm.add(event, actor, repo);
+		pm.add(event, actor, repo, c);
 
 	}
 

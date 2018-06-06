@@ -1,15 +1,18 @@
 #pragma once
-#include "ofMain.h"
+#include "ofCamera.h"
 
 using namespace glm;
 
-#define stay_time 540
+#define stay_time 510
 #define trans_time 90
 
 class StateCam : public ofCamera {
 public:
 
 	void init() {
+		ofCamera::setNearClip(0.1);
+		ofCamera::setFarClip(3000);
+
 		current = DISTANT;
 		next = TRANS;
 		time = 0;

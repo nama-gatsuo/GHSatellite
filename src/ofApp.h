@@ -5,6 +5,8 @@
 #include "SatelliteParticles.h"
 #include "GHSphere.h"
 #include "StateCam.h"
+#include "Palette.h"
+#include "UILayer.h"
 
 class ofApp : public ofBaseApp {
 
@@ -17,10 +19,17 @@ public:
 
 private:
 	StateCam cam;
-	shared_ptr<GHSphere> sphere;
 
-	SatelliteParticles sp;
+	shared_ptr<GHSphere> sphere;
+	shared_ptr<UILayer> ui;
+	shared_ptr<SatelliteParticles> sp;
+	
+	ofFbo compositeFbo;
+	ofFbo alphaBlendFbo;
+	ofFbo solidFbo;
+
 	ofxOscReceiver receiver;
 	
-	bool bShow = false;
+	bool isNameVisible = false;
+	bool isUiVisible = false;
 };
