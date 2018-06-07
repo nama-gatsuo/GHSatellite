@@ -25,8 +25,6 @@ private:
 	shared_ptr<SatelliteParticles> sp;
 	
 	ofFbo compositeFbo;
-	ofFbo alphaBlendFbo;
-	ofFbo solidFbo;
 
 	ofxOscReceiver receiver;
 	

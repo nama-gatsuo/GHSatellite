@@ -14,8 +14,6 @@ void ofApp::setup() {
 	sp = make_shared<SatelliteParticles>();
 
 	compositeFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
-	//alphaBlendFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
-	//solidFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
 	
 	cam.init();
 }
