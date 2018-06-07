@@ -40,12 +40,17 @@ void ofApp::update() {
 	sphere->update();
 	ui->update();
 
-	int m = int(ofGetFrameNum() / 300) % 3;
-	if (int(ofGetFrameNum() / 500) % 4 == 0) isNameVisible = true;
+	int m = int(ofGetFrameNum() / 500) % 3;
+	if (m == 0) isNameVisible = true;
 	else isNameVisible = false;
+
+	if (m == 1) isLabelVisible = true;
+	else isLabelVisible = false;
 
 	if (int(ofGetFrameNum() / 600) % 3 == 1) isUiVisible = true;
 	else isUiVisible = false;
+
+	
 
 	cam.update();
 }
@@ -61,7 +66,7 @@ void ofApp::draw() {
 	ofEnableDepthTest();
 	ofEnableAlphaBlending();
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
-	sp->draw(cam, isNameVisible);
+	sp->draw(cam, isNameVisible, isLabelVisible);
 	
 	// draw solid sphere
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);

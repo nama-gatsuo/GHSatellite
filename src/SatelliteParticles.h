@@ -13,6 +13,9 @@ public:
 		arrowShader.setGeometryInputType(GL_POINTS);
 		arrowShader.setGeometryOutputCount(12);
 		arrowShader.setGeometryOutputType(GL_TRIANGLE_STRIP);
+
+		arrowTrailShader.load("shader/arrowTrail");
+
 	}
 
 	void update() {
@@ -83,36 +86,37 @@ public:
 		//ofEnableDepthTest();
 	}
 
-	void drawNames() const {
+	void drawNames(bool bNameShow, bool bLabelShow) const {
+		
+		if (bNameShow) {
+			for (auto it = ps.begin(); it != ps.end(); it++) {
 
-		//auto& font = Palette::instance().noto_sans_light;
+				ofSetColor(255);
+				float l = it->get()->fTime;
 
-		for (auto it = ps.begin(); it != ps.end(); it++) {
-			
-			ofSetColor(255);
-			float l = it->get()->fTime;
-			
-			if (l > 0.3 && l < 0.6) {
-				ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
-				vec3 p = it->get()->pos + vec3(10, 20, 10);
+				if (l > 0.3 && l < 0.6) {
+					ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
+					vec3 p = it->get()->pos + vec3(10, 20, 10);
 
-				//font.drawString(it->get()->user, p.x, p.y);
+					ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
 
-				ofDrawBitmapString(it->get()->user, it->get()->pos + vec3(10, 20, 10));
+				}
 
 			}
-
-			auto& a = it->get()->arrow;
-			if (a.isVisible()) {
-				
-				//ofDrawBitmapString(">> " +it->get()->repo, a.pos + vec3(2, 6, 0));
-				ofSetColor(a.col);
-				ofDrawBitmapString(it->get()->event, a.pos + vec3(2, 2, 0));
-				
-			}
-
-
 		}
+		
+		if (bLabelShow) {
+			for (auto it = ps.begin(); it != ps.end(); it++) {
+				auto& a = it->get()->arrow;
+				if (a.isVisible()) {
+					
+					ofSetColor(a.col);
+					ofDrawBitmapString(it->get()->event, a.pos + vec3(2, 2, 0));
+
+				}
+			}
+		}
+				
 	}
 
 	void drawArrows(const ofCamera& cam) const {
@@ -123,6 +127,12 @@ public:
 
 		arrowPoints.draw(GL_POINTS, 0, arrowPoints.getNumVertices());
 		arrowShader.end();
+
+		ofEnableBlendMode(OF_BLENDMODE_ADD);
+		for (auto& p : ps) {
+			if (p->arrow.isEmitted) p->arrow.drawTrail(arrowTrailShader);
+		}
+		ofDisableBlendMode();
 	}
 
 	int size() const { return ps.size(); }
@@ -130,7 +140,9 @@ public:
 private:
 	vector<Particle::Ptr> ps;
 	ofShader arrowShader;
+	ofShader arrowTrailShader;
 	ofShader trailShader;
+	
 	ofVbo arrowPoints;
 };
 
@@ -157,7 +169,7 @@ public:
 
 	}
 
-	void draw(const ofCamera& cam, bool bShow) {
+	void draw(const ofCamera& cam, bool bNameShow, bool bLabelShow) {
 		ofEnableAlphaBlending();
 		shader.begin();
 		shader.setUniform1f("farClip", cam.getFarClip());
@@ -169,7 +181,7 @@ public:
 		pm.drawTrails(cam);
 		pm.drawArrows(cam);
 
-		if (bShow) pm.drawNames();
+		pm.drawNames(bNameShow, bLabelShow);
 		ofDisableAlphaBlending();
 	}
 

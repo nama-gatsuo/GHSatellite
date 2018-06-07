@@ -30,4 +30,5 @@ private:
 	
 	bool isNameVisible = false;
 	bool isUiVisible = false;
+	bool isLabelVisible = false;
 };
