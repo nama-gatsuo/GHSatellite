@@ -16,8 +16,7 @@ public:
 		current = DISTANT;
 		next = TRANS;
 		time = 0;
-		stateRoll[1] = PI / 2.;
-		statePan[1] = PI / 2.;
+		
 	}
 
 	void update() {
@@ -118,9 +117,7 @@ private:
 	enum State {
 		DISTANT = 0, CLOSE, MIDDLE, TRANS
 	};
-	float stateRadius[3]{ 900, 36, 300 };
-	float stateRoll[3]{ 0, 0, 0 };
-	float statePan[3]{ 0, 0, 0 };
+	float stateRadius[3]{ 900, 34, 300 };
 
 	float time = 0;
 	State prev;
