@@ -13,17 +13,29 @@ struct Arrow {
 		isHit = false;
 		time = 0;
 		pos = particlePos;
+
+		vec3 b = normalize(cross(normalize(pos), vec3(0, 1, 0)));
+		trailRoll = normalize(cross(normalize(pos), b));
 	}
 
 	void update(const vec3& particlePos) {
+		time++;
+		fTime = (float)time / ARROW_LIFE;
 
-		if (isEmitted && !isHit) {
-			time++;
-			fTime = (float)time / ARROW_LIFE;
-
+		if (isEmitted) {
+			
 			pos = mix(particlePos, vec3(0), fTime);
+			
+			trail.push_back(pos + trailRoll * 0.5);
+			trail.push_back(pos - trailRoll * 0.5);
 
-			hitCheck();
+			if (trail.size() > 24) {
+				trail.erase(trail.begin());
+				trail.erase(trail.begin());
+			}
+			vbo.setVertexData(trail.data(), trail.size(), GL_DYNAMIC_DRAW);
+
+			if (!isHit) hitCheck();
 		}
 
 	}
@@ -43,6 +55,14 @@ struct Arrow {
 	bool isVisible() {
 		return isEmitted && !isHit;
 	}
+	
+	void drawTrail(const ofShader& shader) {
+		shader.begin();
+		shader.setUniform1f("time", fTime);
+		shader.setUniform4f("col", col);
+		vbo.draw(GL_TRIANGLE_STRIP, 0, trail.size());
+		shader.end();
+	}
 
 	bool isEmitted = false;
 	bool isHit = false;
@@ -50,4 +70,8 @@ struct Arrow {
 	float fTime = 0.;
 	vec3 pos;
 	ofFloatColor col;
+
+	vector<vec3> trail;
+	vec3 trailRoll;
+	ofVbo vbo;
 };
