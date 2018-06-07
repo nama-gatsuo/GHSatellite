@@ -15,14 +15,14 @@ public:
 		
 		ofFloatColor* c;
 		
-		if (event == "Push") c = &accent_yellow;
-		else if (event == "Create") c = &accent_second_blue;
+		if (event == "Push") c = &white;
+		else if (event == "Create") c = &accent_yellow;
 		else if (event == "IssueComment") c = &accent_second_orange;
-		else if (event == "PullRequest") c = &white;
+		else if (event == "PullRequest") c = &grey_1;
 		else if (event == "Issues") c = &accent_env_magenta;
-		else if (event == "Watch") c = &accent_env_magenta;
+		else if (event == "Watch") c = &accent_second_blue;
 		else if (event == "Delete") c = &accent_env_magenta;
-		else if (event == "Fork") c = &grey_2;
+		else if (event == "Fork") c = &grey_1;
 		else if (event == "PullRequestReviewComment") c = &grey_2;
 		else c = &grey_3;
 	
@@ -30,6 +30,7 @@ public:
 	}
 
 	ofFloatColor bg;
+	ofFloatColor bg_end;
 	ofFloatColor accent_yellow;
 	ofFloatColor accent_second_orange;
 	ofFloatColor accent_second_blue;
@@ -40,13 +41,16 @@ public:
 	ofFloatColor grey_2;
 	ofFloatColor grey_3;
 
-	ofTrueTypeFont noto_sans_light;  
+	ofTrueTypeFont noto_sans_light;
+	ofTrueTypeFont track_regular_middle;
 	ofTrueTypeFont track_regular_large;
 	ofTrueTypeFont track_regular;
 
 private:
 	Palette() {
 		bg.setHex(0x252839);
+		bg_end.setHex(0x050819);
+
 		accent_yellow.setHex(0xF1B631);
 		accent_second_orange.setHex(0xF67321);
 		accent_second_blue.setHex(0x577590);
@@ -60,12 +64,14 @@ private:
 		noto_sans_light.load("font/NotoSans-Light.ttf", 12, false);
 		noto_sans_light.setLetterSpacing(1.037);
 		
-		track_regular.load("font/Track.ttf", 12, true);
+		track_regular.load("font/Track.ttf", 14, true);
 		track_regular.setLetterSpacing(1.037);
 
+		track_regular_middle.load("font/Track.ttf", 62, true);
+		track_regular_middle.setLetterSpacing(1.037);
+		
 		track_regular_large.load("font/Track.ttf", 48, true);
 		track_regular_large.setLetterSpacing(1.037);
-		track_regular_large.setLineHeight(72);
 	}
 
 };

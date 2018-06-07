@@ -47,13 +47,14 @@ public:
 		auto& font1 = Palette::instance().noto_sans_light;
 		auto& font2 = Palette::instance().track_regular;
 		auto& font3 = Palette::instance().track_regular_large;
+		auto& font4 = Palette::instance().track_regular_middle;
 
 		ofSetColor(255);
 
 		float h = startY;
-		font2.drawString("USER", actorStartX, h);
-		font2.drawString("EVENT", eventStartX, h);
-		font2.drawString("REPOSITORY", repoStartX, h - 3);
+		font2.drawString("USER", actorStartX, h - 6);
+		font2.drawString("EVENT", eventStartX, h - 6);
+		font2.drawString("REPOSITORY", repoStartX, h - 6);
 
 		ofDrawLine(actorStartX, h, ofGetWidth()/2, h);
 
@@ -73,7 +74,10 @@ public:
 		
 		string hms = makeDigit(ofGetHours()) + " : " + makeDigit(ofGetMinutes()) + " : " + makeDigit(ofGetSeconds());
 		
-		font3.drawString(hms + "\n" + date, ofGetWidth() - 512, ofGetHeight() - 128);
+		ofSetColor(Palette::instance().accent_yellow);
+		font4.drawString(hms, ofGetWidth() - 462, ofGetHeight() - 138);
+		ofSetColor(255);
+		font3.drawString(date, ofGetWidth() - 462, ofGetHeight() - 66);
 
 		fbo.end();
 	}

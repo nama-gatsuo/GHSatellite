@@ -4,7 +4,7 @@
 using namespace glm;
 
 #define stay_time 510
-#define trans_time 90
+#define trans_time 120
 
 class StateCam : public ofCamera {
 public:
@@ -48,7 +48,7 @@ public:
 		case CLOSE: {
 
 			radius = stateRadius[CLOSE];
-			t += 0.01;
+			t += 0.005;
 			ofNode::setGlobalPosition(pos);
 			ofNode::lookAt(getPos(radius, s, t + .4), normalize(pos));
 			
@@ -117,7 +117,7 @@ private:
 	enum State {
 		DISTANT = 0, CLOSE, MIDDLE, TRANS
 	};
-	float stateRadius[3]{ 900, 34, 300 };
+	float stateRadius[3]{ 800, 34, 240 };
 
 	float time = 0;
 	State prev;

@@ -44,7 +44,6 @@ public:
 			c.push_back(h.col.r); c.push_back(h.col.g); c.push_back(h.col.b);
 			p.push_back(h.pos.x); p.push_back(h.pos.y); p.push_back(h.pos.z);
 		}
-		
 
 		shader.begin();
 		shader.setUniform3fv("colv", c.data(), hitList.size());

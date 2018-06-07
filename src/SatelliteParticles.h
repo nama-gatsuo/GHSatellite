@@ -71,8 +71,7 @@ public:
 	}
 
 	void drawTrails(const ofCamera& cam) const {
-		//ofDisableDepthTest();
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
+		
 		trailShader.begin();
 		trailShader.setUniform1f("farClip", cam.getFarClip());
 		trailShader.setUniform1f("nearClip", cam.getNearClip());
@@ -83,7 +82,7 @@ public:
 		}
 		trailShader.end();
 		ofDisableBlendMode();
-		//ofEnableDepthTest();
+		
 	}
 
 	void drawNames(bool bNameShow, bool bLabelShow) const {
@@ -94,7 +93,7 @@ public:
 				ofSetColor(255);
 				float l = it->get()->fTime;
 
-				if (l > 0.3 && l < 0.6) {
+				if (l > 0.1 && l < 0.5) {
 					ofDrawLine(it->get()->pos, it->get()->pos + vec3(10, 20, 10));
 					vec3 p = it->get()->pos + vec3(10, 20, 10);
 
@@ -127,12 +126,11 @@ public:
 
 		arrowPoints.draw(GL_POINTS, 0, arrowPoints.getNumVertices());
 		arrowShader.end();
-
-		ofEnableBlendMode(OF_BLENDMODE_ADD);
+		
 		for (auto& p : ps) {
 			if (p->arrow.isEmitted) p->arrow.drawTrail(arrowTrailShader);
 		}
-		ofDisableBlendMode();
+		
 	}
 
 	int size() const { return ps.size(); }

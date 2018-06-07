@@ -3,7 +3,6 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 	
-	ofBackground(Palette::instance().bg);
 	receiver.setup(7402);
 	ofSetFrameRate(60);
 	ofTrueTypeFont::setGlobalDpi(72);
@@ -50,14 +49,14 @@ void ofApp::update() {
 	if (int(ofGetFrameNum() / 600) % 3 == 1) isUiVisible = true;
 	else isUiVisible = false;
 
-	
-
 	cam.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw() {
 	
+	ofBackgroundGradient(Palette::instance().bg, Palette::instance().bg_end, OF_GRADIENT_CIRCULAR);
+
 	compositeFbo.begin();
 	ofClear(0, 0);
 	cam.begin();
