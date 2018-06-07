@@ -1,9 +1,13 @@
 #version 400
 
-flat in vec3 vColor;
-in float vDepth;
-in vec4 vPos;
+in struct Vert {
+    vec3 color;
+    float depth;
+    vec4 pos;
+    vec3 bc;
+} vert;
 
+flat in int isHit;
 out vec4 outputColor;
 
 vec3 calcFlatNormal(vec3 posInViewSpace){
@@ -16,9 +20,18 @@ vec3 calcFlatNormal(vec3 posInViewSpace){
 
 void main() {
 
-    vec3 n = calcFlatNormal(vPos.xyz);
-    vec3 l = normalize(vec3(0.5, 1.0, 0.5));
-    vec3 c = vColor * clamp(dot(n, l), 0.3, 1.0);
+    vec3 c;
+    if (any(lessThan(vert.bc, vec3(0.08)))) {
+        if (isHit == 1) c = vert.color;
+        else c = vec3(0.5);
+    } else {
+        if (isHit == 1) c = vec3(0.8);
+        else c = vec3(0.6);
+    }
+
+    vec3 n = calcFlatNormal(vert.pos.xyz);
+    vec3 l = normalize(vec3(1.0, 0.2, -0.5));
+    c *= clamp(dot(n, l), 0.3, 1.0);
 
     outputColor = vec4(c, 1.);
 }

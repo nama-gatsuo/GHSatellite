@@ -9,8 +9,11 @@ using namespace glm;
 class GHSphere {
 public:
 	GHSphere(float radius=30.) {
-		mesh = ofMesh::icosphere(radius, 3);
-		shader.load("shader/GHSphere");
+		mesh = ofMesh::icosphere(radius, 2);
+		shader.load("shader/GHSphere.vert", "shader/GHSphere.frag", "shader/GHSphere.geom");
+		shader.setGeometryInputType(GL_TRIANGLE_STRIP);
+		shader.setGeometryOutputType(GL_TRIANGLE_STRIP);
+		shader.setGeometryOutputCount(12);
 
 		ofAddListener(hitEvent, this, &GHSphere::handleHit);
 	}
