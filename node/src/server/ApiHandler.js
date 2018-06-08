@@ -2,12 +2,13 @@ import osc from 'osc'
 import https from 'https'
 import fetch from 'node-fetch'
 
-export default class Sender {
+export default class ApiHandler {
     constructor(){
 
         const item_num = 50;
 
         this.url = 'https://api.github.com/events';
+        /* use own token */
         this.url += '?access_token=2bd8ac40da75af79216f63ca3a2f86f4cd85416b';
         this.url += '&per_page=' + item_num;
 
@@ -69,16 +70,13 @@ export default class Sender {
                 this.cache = this.cache.slice(this.cache.length - this.cache_size, this.cache.length);
             }
 
-            //console.log('new:', cnt_new);
             this.que_interval = cnt_new === 0 ? 100 : Math.floor(1000 / cnt_new);
-            //console.log('delta:', this.que_interval);
 
             data_new.forEach((el, i, arry) => {
                 arry[i].delta = this.que_interval;
             });
             this.queue = this.queue.concat(data_new);
 
-            //console.log('----');
         } catch (err) {
             console.log(err);
         }
