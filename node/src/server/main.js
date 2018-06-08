@@ -1,4 +1,6 @@
 import ApiHandler from './ApiHandler'
+import Server from './Server'
 
-let s = new ApiHandler();
-s.init();
+let s = new Server();
+let a = new ApiHandler();
+a.init();
