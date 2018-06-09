@@ -1,9 +1,10 @@
 import osc from 'osc'
 import https from 'https'
 import fetch from 'node-fetch'
+import socketIo from 'socket.io'
 
 export default class ApiHandler {
-    constructor(){
+    constructor(server){
 
         const item_num = 50;
 
@@ -26,6 +27,8 @@ export default class ApiHandler {
             metadata: true
         });
         this.udpPort.open();
+
+        this.io = socketIo.listen(server);
     }
 
     init() {

@@ -26,6 +26,7 @@
     "node-fetch": "^2.1.2",
     "osc": "^2.2.2",
     "path": "^0.12.7",
+    "socket.io": "^2.1.1",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   }
