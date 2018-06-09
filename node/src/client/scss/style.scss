@@ -10,87 +10,102 @@ body {
     background: $bg;
 }
 
+section.filter {
+    width: 488px;
+    .items {
+        padding-left: 8px;
+    }
+
+    .item {
+        position: relative;
+        width: 472px;
+        height: 72px;
+        dd.mark {
+            position: absolute;
+            left: 20px;
+            top: 4px;
+            width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background-color: $bg;
+        }
+        dt {
+            position: absolute;
+            left: 72px;
+            font-weight: 400;
+            font-style: italic;
+        }
+        dd.desc {
+            position: absolute;
+            left: 72px;
+            top: 21px;
+            width: 400px;
+            font-size: 0.7em;
+            color: $grey_1;
+        }
+        &.active {
+            .mark {
+                background-color: $bg;
+            }
+            dt {
+                font-weight: 700;
+                font-style: normal;
+            }
+            dd.desc {
+                color: $white;
+            }
+        }
+    }
+
+    @for $i from 0 through 8 {
+        $col: #000000;
+        @if $i == 0 { // Push
+            $col: $white;
+        } @else if $i == 1 { // Create
+            $col: $accent_yellow;
+        } @else if $i == 2 { // Issues
+            $col: $accent_env_magenta;
+        } @else if $i == 3 { // Issue Comment
+            $col: $accent_second_orange;
+        } @else if $i == 4 { // Pull Request
+            $col: $grey_1;
+        } @else if $i == 5 { // Pull Request Review Comment
+            $col: $grey_2;
+        } @else if $i == 6 { // Watch
+            $col: $accent_second_blue;
+        } @else if $i == 7 { // Delete
+            $col: $accent_env_magenta;
+        } @else if $i == 8 { // Fork
+            $col: $grey_3;
+        }
+
+        .item-#{$i} {
+            .mark {
+                border: 1px $col solid;
+            }
+            dt {
+                color: $col;
+            }
+            &.active {
+                .mark {
+                    background-color: $col;
+                }
+            }
+        }
+    }
+}
+
 .heading {
     height: 27px;
     padding: 25px;
 }
 
-.items {
-    padding-left: 8px;
+section.graph {
+    position: absolute;
+    left: 488px + 25px;
+    top: 0;
 }
 
-.item {
-    position: relative;
-    width: 472px;
-    height: 72px;
-    dd.mark {
-        position: absolute;
-        left: 20px;
-        top: 4px;
-        width: 32px;
-        height: 32px;
-        border-radius: 16px;
-        background-color: $bg;
-    }
-    dt {
-        position: absolute;
-        left: 72px;
-        font-weight: 400;
-        font-style: italic;
-    }
-    dd.desc {
-        position: absolute;
-        left: 72px;
-        top: 21px;
-        width: 400px;
-        font-size: 0.7em;
-    }
-    &.active {
-        .mark {
-            background-color: $bg;
-        }
-        dt {
-            font-weight: 700;
-            font-style: normal;
-        }
+#Graph {
 
-    }
-}
-
-
-@for $i from 0 through 8 {
-    $col: #000000;
-    @if $i == 0 { // Push
-        $col: $white;
-    } @else if $i == 1 { // Create
-        $col: $accent_yellow;
-    } @else if $i == 2 { // Issues
-        $col: $accent_env_magenta;
-    } @else if $i == 3 { // Issue Comment
-        $col: $accent_second_orange;
-    } @else if $i == 4 { // Pull Request
-        $col: $grey_1;
-    } @else if $i == 5 { // Pull Request Review Comment
-        $col: $grey_2;
-    } @else if $i == 6 { // Watch
-        $col: $accent_second_blue;
-    } @else if $i == 7 { // Delete
-        $col: $accent_env_magenta;
-    } @else if $i == 8 { // Fork
-        $col: $grey_1;
-    }
-
-    .item-#{$i} {
-        .mark {
-            border: 1px $col solid;
-        }
-        dt {
-            color: $col;
-        }
-        &.active {
-            .mark {
-                background-color: $col;
-            }
-        }
-    }
 }

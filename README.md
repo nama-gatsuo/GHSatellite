@@ -3,11 +3,15 @@
 
 ## Dependency
 Tested on
-* OS: Windows 10 Home ver.1803
+* Windows 10 Home ver.1803
 * Node.js v8.11.1
 * openFrameworks 0.10.0
     * master banch on github at [this commit](https://github.com/openframeworks/openFrameworks/tree/c274c7fb51b4ae0552cd4cdb00475458aeeb610a)
     * with Viual Studio 2017(v141)
+* font:
+    * (noto-sans-normal-light)[https://www.google.com/get/noto/] by google
+    * (track)[http://www.fontfabric.com/track-free-font/] by (Gumpita Rahayu)[https://www.behance.net/gumpita]
+
 
 ## Bulid
 ### node Server

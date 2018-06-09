@@ -7,54 +7,60 @@
     <script src="/socket.io/socket.io.js"></script>
 </head>
 <body>
-    <h2 class="heading">Filter</h2>
-    <ul class="items">
-        <dl class="item item-0">
-            <dd class="mark"></dd>
-            <dt>Push</dt>
-            <dd class="desc">Triggered on a push to a repository branch.</dd>
-        </dl>
-        <dl class="item item-1">
-            <dd class="mark"></dd>
-            <dt>Create</dt>
-            <dd class="desc">Represents a created repository, branch, or tag.</dd>
-        </dl>
-        <dl class="item item-2">
-            <dd class="mark"></dd>
-            <dt>Issues</dt>
-            <dd class="desc">Triggered when an issue is assigned, unassigned, labeled, unlabeled, opened, edited, milestoned, demilestoned, closed, or reopened.</dd>
-        </dl>
-        <dl class="item item-3">
-            <dd class="mark"></dd>
-            <dt>Issue Comment</dt>
-            <dd class="desc">Triggered when an issue comment is created, edited, or deleted.</dd>
-        </dl>
-        <dl class="item item-4">
-            <dd class="mark"></dd>
-            <dt>Pull Request</dt>
-            <dd class="desc">Triggered when a pull request is assigned, unassigned, labeled, unlabeled, opened, edited, closed, reopened, or synchronized. </dd>
-        </dl>
-        <dl class="item item-5">
-            <dd class="mark"></dd>
-            <dt>Pull Request Review Comment</dt>
-            <dd class="desc">Triggered when a comment on a pull request's unified diff is created, edited, or deleted (in the Files Changed tab).</dd>
-        </dl>
-        <dl class="item item-6">
-            <dd class="mark"></dd>
-            <dt>Watch</dt>
-            <dd class="desc">The WatchEvent is related to starring a repository, not watching. </dd>
-        </dl>
-        <dl class="item item-7">
-            <dd class="mark"></dd>
-            <dt>Delete</dt>
-            <dd class="desc">Represents a deleted branch or tag.</dd>
-        </dl>
-        <dl class="item item-8">
-            <dd class="mark"></dd>
-            <dt>Fork</dt>
-            <dd class="desc">Triggered when a user forks a repository.</dd>
-        </dl>
-    </ul>
+    <section class="filter">
+        <h2 class="heading">Filter</h2>
+        <ul class="items">
+            <dl class="item item-0">
+                <dd class="mark"></dd>
+                <dt>Push</dt>
+                <dd class="desc">Triggered on a push to a repository branch.</dd>
+            </dl>
+            <dl class="item item-1">
+                <dd class="mark"></dd>
+                <dt>Create</dt>
+                <dd class="desc">Represents a created repository, branch, or tag.</dd>
+            </dl>
+            <dl class="item item-2">
+                <dd class="mark"></dd>
+                <dt>Issues</dt>
+                <dd class="desc">Triggered when an issue is assigned, unassigned, labeled, unlabeled, opened, edited, milestoned, demilestoned, closed, or reopened.</dd>
+            </dl>
+            <dl class="item item-3">
+                <dd class="mark"></dd>
+                <dt>Issue Comment</dt>
+                <dd class="desc">Triggered when an issue comment is created, edited, or deleted.</dd>
+            </dl>
+            <dl class="item item-4">
+                <dd class="mark"></dd>
+                <dt>Pull Request</dt>
+                <dd class="desc">Triggered when a pull request is assigned, unassigned, labeled, unlabeled, opened, edited, closed, reopened, or synchronized. </dd>
+            </dl>
+            <dl class="item item-5">
+                <dd class="mark"></dd>
+                <dt>Pull Request Review Comment</dt>
+                <dd class="desc">Triggered when a comment on a pull request's unified diff is created, edited, or deleted (in the Files Changed tab).</dd>
+            </dl>
+            <dl class="item item-6">
+                <dd class="mark"></dd>
+                <dt>Watch</dt>
+                <dd class="desc">The WatchEvent is related to starring a repository, not watching. </dd>
+            </dl>
+            <dl class="item item-7">
+                <dd class="mark"></dd>
+                <dt>Delete</dt>
+                <dd class="desc">Represents a deleted branch or tag.</dd>
+            </dl>
+            <dl class="item item-8">
+                <dd class="mark"></dd>
+                <dt>Fork</dt>
+                <dd class="desc">Triggered when a user forks a repository.</dd>
+            </dl>
+        </ul>
+    </section>
+    <section class="graph">
+        <h2 class="heading">Graph</h2>
+        <div id="Graph"></div>
+    </section>
 </body>
 <script src="/main.js"></script>
 </html>

@@ -1,10 +1,8 @@
-import osc from 'osc'
 import https from 'https'
 import fetch from 'node-fetch'
-import socketIo from 'socket.io'
 
 export default class ApiHandler {
-    constructor(server){
+    constructor(udpPort, socketIo){
 
         const item_num = 50;
 
@@ -21,14 +19,8 @@ export default class ApiHandler {
         this.que_interval = 100;
         this.req_interval = 1000;
 
-        this.udpPort = new osc.UDPPort({
-            localAddress: '0.0.0.0',
-            localPort: 7401,
-            metadata: true
-        });
-        this.udpPort.open();
-
-        this.io = socketIo.listen(server);
+        this.udpPort = udpPort;
+        this.io = socketIo;
     }
 
     init() {
@@ -116,7 +108,8 @@ export default class ApiHandler {
             args: args
         }, '127.0.0.1', 7402);
 
-        //console.log(args);
+        await this.io.emit('new', { event: d.event });
+
     }
 
 };
