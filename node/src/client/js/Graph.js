@@ -21,7 +21,7 @@ var p = p5 => {
     let context = {};
 
     p5.setup = () => {
-        p5.createCanvas(512, 512).parent('Graph');
+        p5.createCanvas(480, 640).parent('Graph');
         p5.pixelDensity(1);
         p5.frameRate(20);
 
@@ -48,20 +48,47 @@ var p = p5 => {
         context.clearRect(0, 0, p5.width, p5.height);
 
         p5.noFill();
-        data.forEach(d => {
+        data.forEach((d, i) => {
 
             if (d.visible) {
+                p5.noFill();
                 p5.stroke(d.color);
                 p5.beginShape();
 
                 d.points.forEach((y, x) => {
-                    p5.vertex(x * 8, 512 - y * 0.5);
+                    p5.vertex(x * 8, p5.height - y);
                 });
 
                 p5.endShape();
+
+                // data label
+                p5.noStroke();
+                p5.fill(d.color);
+                let n = i * 6;
+                p5.text(d.label, n * 8, p5.height - d.points[n]);
             }
 
         });
+
+        // y labels
+        for (let i = 1; i < 7; i++) {
+            p5.noStroke();
+            p5.fill('#677077');
+
+            let y = p5.height - 100 * i;
+            p5.text(100 * i, 0, y);
+
+            p5.stroke('#677077');
+            p5.beginShape(p5.LINES);
+            for (let x = 0; x < p5.width; x += 12) {
+                p5.vertex(x, y);
+            }
+            p5.endShape();
+        }
+
+        p5.noStroke();
+        p5.fill('#677077');
+        p5.text('Amount per minute', p5.width/2-64, 16);
 
     };
 

@@ -12,6 +12,12 @@ body {
 
 section.filter {
     width: 488px;
+
+    .heading {
+        height: 27px;
+        padding: 25px;
+    }
+
     .items {
         padding-left: 8px;
     }
@@ -95,15 +101,17 @@ section.filter {
     }
 }
 
-.heading {
-    height: 27px;
-    padding: 25px;
-}
+
 
 section.graph {
     position: absolute;
-    left: 488px + 25px;
+    left: 490px;
     top: 0;
+
+    .heading {
+        height: 27px;
+        padding: 25px 0;
+    }
 }
 
 #Graph {
