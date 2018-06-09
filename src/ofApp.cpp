@@ -46,7 +46,7 @@ void ofApp::update() {
 	if (m == 1) isLabelVisible = true;
 	else isLabelVisible = false;
 
-	if (int(ofGetFrameNum() / 600) % 3 == 1) isUiVisible = true;
+	if (int(ofGetFrameNum() / 720) % 2 == 1) isUiVisible = true;
 	else isUiVisible = false;
 
 	cam.update();

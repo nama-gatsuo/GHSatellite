@@ -13,6 +13,7 @@ var p = p5 => {
         { label: 'Watch', color: '#677077', points: [], 'visible': true },
         { label: 'Delete', color: '#C01F33', points: [], 'visible': true },
         { label: 'Fork', color: '#414250', points: [], 'visible': true },
+        { label: 'other', color: '#414250', points: [], 'visible': true }
     ];
 
     const xSize = 60;
@@ -65,7 +66,10 @@ var p = p5 => {
     };
 
     p5.add = i => {
-        if (isSetuped) data[i].points[xSize - 1]++;
+        if (isSetuped) {
+            if (i < 0) data[ data.length-1 ].points[xSize - 1]++;
+            else data[i].points[xSize - 1]++;
+        }
     }
 
     p5.setVisible = (i, isVisible) => {

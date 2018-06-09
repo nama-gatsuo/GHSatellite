@@ -22,15 +22,7 @@ io.sockets.on('connection', socket => {
 
     socket.on('filter', msg => {
         console.log(msg.event, msg.enabled?'on':'off');
-        let args = [
-            { type: 's', value: msg.event },
-            { type: 'i', value: msg.enabled?1:0 }
-        ];
-
-        udpPort_oF.send({
-            address: '/filter',
-            args: args
-        }, '127.0.0.1', 7402);
+        a.setFilter(msg.event, !msg.enabled);
     });
 
     socket.on('disconnect', () => {

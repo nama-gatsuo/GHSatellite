@@ -21,6 +21,18 @@ export default class ApiHandler {
 
         this.udpPort = udpPort;
         this.io = socketIo;
+
+        this.filterTarget = {
+            'Push': false,
+            'Create': false,
+            'Issues': false,
+            'IssueComment': false,
+            'PullRequest': false,
+            'PullRequestReviewComment': false,
+            'Watch': false,
+            'Delete': false,
+            'Fork': false
+        };
     }
 
     init() {
@@ -28,6 +40,10 @@ export default class ApiHandler {
         setTimeout(() => { this.dequeue(); }, 2000);
         console.log('running...');
         console.log('Stop: ctrl + c')
+    }
+
+    setFilter(e, isActive) {
+        this.filterTarget[e] = isActive;
     }
 
     async req(url) {
@@ -103,10 +119,12 @@ export default class ApiHandler {
             { type: 's', value: d.repo }
         ];
 
-        await this.udpPort.send({
-            address: '/new',
-            args: args
-        }, '127.0.0.1', 7402);
+        if (!(this.filterTarget[d.event])) {
+            await this.udpPort.send({
+                address: '/new',
+                args: args
+            }, '127.0.0.1', 7402);
+        }
 
         await this.io.emit('new', { event: d.event });
 

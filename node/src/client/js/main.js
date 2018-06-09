@@ -1,21 +1,7 @@
 import Graph from './Graph'
 
-var getId = e => {
-    let index = 0;
-    //TODO: 'other' handling
-    if (e === 'Push') index = 0;
-    else if (e === 'Create') index = 1;
-    else if (e === 'Issues') index = 2;
-    else if (e === 'IssueComment') index = 3;
-    else if (e === 'PullRequest') index = 4;
-    else if (e === 'PullRequestReviewComment') index = 5;
-    else if (e === 'Watch') index = 6;
-    else if (e === 'Delete') index = 7;
-    else if (e === 'Fork') index = 8;
-
-    return index;
-}
-
+let labels = [];
+var getId = e => { return labels.indexOf(e); }
 
 let socket = io();
 let items = document.getElementsByClassName("item");
@@ -26,22 +12,28 @@ let g = new Graph();
 // add listner of each item
 for (let i = 0; i < items.length; i++) {
     items[i].addEventListener('touchstart', e => {
+
         e.preventDefault();
         e.currentTarget.classList.toggle('active');
 
-        let t = e.currentTarget.children[1].textContent.replace(/\s+/g, '');
+        let t = e.currentTarget.id.split('-');
+        let n = parseInt(t[0], 10);
         let b = e.currentTarget.classList.contains('active');
+        let s = t[1];
 
         socket.emit('filter', {
-            'event': t,
+            'event': s,
             'enabled': b
         });
-        g.setVisible(getId(t), b);
+        g.setVisible(n, b);
 
     }, true);
 
+    let l = items[i].children[1].textContent.replace(/\s+/g, '');
     // default active
+    items[i].id = i + '-' + l;
     items[i].classList.add('active');
+    labels.push(l);
 }
 
 // handling new data from server

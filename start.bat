@@ -1,2 +1,2 @@
 start .\bin\GHSatellite.exe
-node .\node\dist\server
+node .\node\dist\server\main
