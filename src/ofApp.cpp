@@ -77,7 +77,8 @@ void ofApp::draw() {
 	ofDisableDepthTest();
 	compositeFbo.draw(0, 0);
 	if (isUiVisible) ui->draw();
-
+    
+    //ofDrawBitmapString("fps" + ofToString(ofGetFrameRate()), 12, ofGetHeight()-16);
 	
 }
 

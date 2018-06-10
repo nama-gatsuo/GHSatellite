@@ -55,4 +55,4 @@ gulp.task('client:build:scss', () => {
 
 gulp.task('watch', ['server:watch', 'client:watch']);
 
-gulp.task('build', ['server', 'client:build:js', 'client:build:scss']);
+gulp.task('build', ['server:build', 'client:build:js', 'client:build:scss']);

@@ -354,3 +354,11 @@ ASALocalRun/
 *.exp
 
 icon.rc
+
+*.xcconfig
+*.plist
+*.pbxproj
+*.xcworkspacedata
+*.xcscheme
+*.make
+Makefile
