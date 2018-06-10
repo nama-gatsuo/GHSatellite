@@ -4,11 +4,12 @@ import fetch from 'node-fetch'
 export default class ApiHandler {
     constructor(udpPort, socketIo){
 
+        /* TODO: paste own token */
+        const token = '2bd8ac40da75af79216f63ca3a2f86f4cd85416b';
         const item_num = 50;
 
         this.url = 'https://api.github.com/events';
-        /* use own token */
-        this.url += '?access_token=2bd8ac40da75af79216f63ca3a2f86f4cd85416b';
+        this.url += '?access_token=' + token;
         this.url += '&per_page=' + item_num;
 
         this.cache = [];

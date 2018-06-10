@@ -48,6 +48,14 @@ var p = p5 => {
         context.clearRect(0, 0, p5.width, p5.height);
 
         p5.noFill();
+
+        let yScale = 1.2;
+        if (data[0].visible) {
+            yScale = 1.2;
+        } else {
+            yScale = 3.;
+        }
+
         data.forEach((d, i) => {
 
             if (d.visible) {
@@ -56,7 +64,7 @@ var p = p5 => {
                 p5.beginShape();
 
                 d.points.forEach((y, x) => {
-                    p5.vertex(x * 8, p5.height - y);
+                    p5.vertex(x * 8, p5.height - y * yScale);
                 });
 
                 p5.endShape();
@@ -71,11 +79,11 @@ var p = p5 => {
         });
 
         // y labels
-        for (let i = 1; i < 7; i++) {
+        for (let i = 1; i * 100 * yScale < p5.height; i++) {
             p5.noStroke();
             p5.fill('#677077');
 
-            let y = p5.height - 100 * i;
+            let y = p5.height - 100 * yScale * i;
             p5.text(100 * i, 0, y);
 
             p5.stroke('#677077');
