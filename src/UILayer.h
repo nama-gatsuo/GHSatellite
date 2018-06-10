@@ -129,5 +129,5 @@ private:
 	float eventStartX = 256;
 	float repoStartX = 512;
 
-	int maxNunRows = 42;
+	int maxNunRows = 40;
 };
