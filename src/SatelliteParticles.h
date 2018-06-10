@@ -128,7 +128,7 @@ public:
 		arrowShader.end();
 		
 		for (auto& p : ps) {
-			if (p->arrow.isEmitted) p->arrow.drawTrail(arrowTrailShader);
+			if (p->arrow.isVisible()) p->arrow.drawTrail(arrowTrailShader);
 		}
 		
 	}
