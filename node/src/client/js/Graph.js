@@ -49,9 +49,9 @@ var p = p5 => {
 
         p5.noFill();
 
-        let yScale = 1.2;
+        let yScale = 1.;
         if (data[0].visible) {
-            yScale = 1.2;
+            yScale = 1.;
         } else {
             yScale = 3.;
         }

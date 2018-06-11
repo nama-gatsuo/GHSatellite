@@ -36,11 +36,11 @@ public:
 
 	void add(const string& event, const string& actor, const string& repo, const ofFloatColor& c) {
 		rows.emplace_back(event, actor, repo, c);
-		if (rows.size() > maxNunRows) rows.erase(rows.begin());
+		if (rows.size() > maxNumRows) rows.erase(rows.begin());
 	}
 
 	void update() {
-		
+
 		fbo.begin();
 		ofClear(0, 0);
 
@@ -71,9 +71,9 @@ public:
 			font1.drawString(row.repoOwner + " / " + row.repoName, repoStartX, h);
 
 		}
-		
+
 		string hms = makeDigit(ofGetHours()) + " : " + makeDigit(ofGetMinutes()) + " : " + makeDigit(ofGetSeconds());
-		
+
 		ofSetColor(Palette::instance().accent_yellow);
 		font4.drawString(hms, ofGetWidth() - 462, ofGetHeight() - 138);
 		ofSetColor(255);
@@ -85,11 +85,11 @@ public:
 	void draw() const {
 		fbo.draw(0, 0);
 	}
-	
+
 private:
 	ofFbo fbo;
 	string date;
-	
+
 	struct Row {
 		Row(const string& event, const string& actor, const string& repo, const ofFloatColor& c) {
 			this->actor = "@" + actor;
@@ -110,7 +110,7 @@ private:
 	vector<Row> rows;
 
 	string makeDigit(int digit) {
-		
+
 		string sd;
 
 		if (digit < 10) {
@@ -129,5 +129,5 @@ private:
 	float eventStartX = 256;
 	float repoStartX = 512;
 
-	int maxNunRows = 40;
+	int maxNumRows = 43;
 };
