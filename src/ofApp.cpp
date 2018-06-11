@@ -7,7 +7,8 @@ void ofApp::setup() {
 	ofSetFrameRate(60);
 	ofTrueTypeFont::setGlobalDpi(72);
 	ofEnableAntiAliasing();
-
+    ofToggleFullscreen();
+    
 	sphere = make_shared<GHSphere>();
 	ui = make_shared<UILayer>();
 	sp = make_shared<SatelliteParticles>();
@@ -79,7 +80,7 @@ void ofApp::draw() {
 	if (isUiVisible) ui->draw();
     
     //ofDrawBitmapString("fps" + ofToString(ofGetFrameRate()), 12, ofGetHeight()-16);
-	
+    
 }
 
 //--------------------------------------------------------------
