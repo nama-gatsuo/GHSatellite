@@ -51,9 +51,9 @@ var p = p5 => {
 
         let yScale = 1.;
         if (data[0].visible) {
-            yScale = 1.;
+            yScale = 0.8;
         } else {
-            yScale = 3.;
+            yScale = 2.;
         }
 
         data.forEach((d, i) => {
