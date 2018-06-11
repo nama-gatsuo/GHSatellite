@@ -73,7 +73,7 @@ var p = p5 => {
                 p5.noStroke();
                 p5.fill(d.color);
                 let n = i * 6;
-                p5.text(d.label, n * 8, p5.height - d.points[n]);
+                p5.text(d.label, n * 8, p5.height - d.points[n] * yScale);
             }
 
         });
