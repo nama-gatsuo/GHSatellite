@@ -7,7 +7,8 @@ Tablet View
 ![](./img/tablet_view.png)
 
 ## About
-### GH Satellite: real-time contribution visualizer
+### GH Satellite:
+
 **EN:** "Contributions" made by users in the world on Github through Source Code are visualized in real-time by metaphor of satellite orbit. The satellite appears continuously and each one has user information. The arrows indicate that various event operations such as creation of a public repository, push, issue report, etc. have been performed, and converge in the center sphere. Color varies depending on the type of event. The satellite group that continually appears for 24 hours directly represents the worldwide "contribution" through Source Code.
 
 The data source is real-time information of the public repository that can be obtained by [Events](https://api.github.com/events) of [GitHub API](https://developer.github.com/v3/?). This software(s) are developed with OSS library such like data acquisition and processing by Node.js and three dimensional visualization by openFrameworks. The source code of this work is also released on GitHub.
