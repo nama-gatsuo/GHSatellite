@@ -9,13 +9,13 @@ Tablet View
 ## About
 ### GH Satellite:
 
-**EN:** "Contributions" made by users in the world on Github through Source Code are visualized in real-time by metaphor of satellite orbit. The satellite appears continuously and each one has user information. The arrows indicate that various event operations such as creation of a public repository, push, issue report, etc. have been performed, and converge in the center sphere. Color varies depending on the type of event. The satellite group that continually appears for 24 hours directly represents the worldwide "contribution" through Source Code.
+**EN:** "Contributions" made by users in the world on Github through Source Code are visualized in real-time by satellite orbits as a metaphor. The satellite appears continuously and each one has user information. The arrows indicate that various event operations such as creation of a public repository, push, issue report, etc. have been performed, and converge in the center sphere. Color varies depending on the type of event. The satellite group that continually appears for 24 hours directly represents the worldwide "contribution" through Source Code.
 
-The data source is real-time information of the public repository that can be obtained by [Events](https://api.github.com/events) of [GitHub API](https://developer.github.com/v3/?). This software(s) are developed with OSS library such like data acquisition and processing by Node.js and three dimensional visualization by openFrameworks. The source code of this work is also released on GitHub.
+The data source is real-time information of the public repository that can be obtained by [Events](https://api.github.com/events) of [GitHub API](https://developer.github.com/v3/?). Theses softwares are developed with OSS libraries such like data acquisition and processing by Node.js and three dimensional visualization by openFrameworks. The source code of this work is also released on GitHub.
 
-**JP:** 今現在、世界のGithub上のユーザーがSource Codeを通じて行う貢献 "contribution" が、衛星軌道のメタファによって表現される。衛星は継続的に現れ、そのひとつひとつはユーザ情報を持っている。発せられる矢印は公開レポジトリの作成やPush、Issue報告など各種イベント操作が行われたことを表し、中央の球体の中に収斂していく。色はイベントの種類によって異なる。24時間絶え間なく現れる衛生群は、 Source Codeを介して行われる世界中の"貢献"を直接的にあらわしている。
+**JP:** 今現在、世界のGithub上のユーザーがSource Codeを通じて行う貢献 "contribution" が、衛星軌道のメタファによって表現される。衛星は継続的に現れ、ひとつひとつはユーザ情報を持っている。発せられる矢印は公開レポジトリの作成やPush、Issue報告など各種イベント操作が行われたことを表し、中央の球体の中に収斂していく。色はイベントの種類によって異なる。24時間絶え間なく現れる衛生群は、 Source Codeを介して行われる世界中の"貢献"を直接的にあらわしている。
 
-データ・ソースは、[GitHub API](https://developer.github.com/v3/?) の [Events](https://api.github.com/events) で取得できる公開レポジトリのリアルタイム情報である。データの取得と処理をNode.js、3次元可視化プログラムをopenFrameworksによって制作され、OSSのみを用いて開発されている。本作のSource CodeもまたGitHub上で公開されている。
+データ・ソースは、[GitHub API](https://developer.github.com/v3/?) の [Events](https://api.github.com/events) で取得できる公開レポジトリのリアルタイム情報である。データの取得と処理をNode.js、3次元可視化プログラムをopenFrameworksで制作し、OSSを用いて開発されている。本作のSource CodeもまたGitHub上で公開されている。
 
 ## Dependency
 Tested on
@@ -49,4 +49,4 @@ $ gulp build
 
 ## Run
 Double clicking `start.bat`(Windows) / `start.command`(macOS) then automatically node server and oF app will start.
-* access with HTTP to PORT 8080 then can get controller.
+* access with HTTP to PORT 8080 then can get controller(for tablet view).
