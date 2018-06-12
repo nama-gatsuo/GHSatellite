@@ -1,9 +1,9 @@
 # GHSatellite
 
-PC View
+PC View: visualizing user activities on public repositories in real-time
 ![](./img/pc_view.png)
 
-Tablet View
+Tablet View: provides the filter switches of visualizer and the graph of events' amount per minute
 ![](./img/tablet_view.png)
 
 ## About
