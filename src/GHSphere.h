@@ -66,9 +66,7 @@ private:
 
 	struct Hit {
 		
-		Hit(const vec3& pos, const ofFloatColor col) {
-			this->pos = pos;
-			this->col = col;
+		Hit(const vec3& pos, const ofFloatColor& col) : pos(pos), col(col) {
 			time = 0.;
 			isDead = false;
 		}

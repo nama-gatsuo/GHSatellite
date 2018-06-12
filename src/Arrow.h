@@ -43,9 +43,7 @@ struct Arrow {
 	void hitCheck() {
 
 		if (!isHit && length(pos) <= sphereRadius) {
-			HitInfo h;
-			h.col = col;
-			h.pos = pos;
+			HitInfo h(pos, col);
 			ofNotifyEvent(hitEvent, h);
 			isHit = true;
 		}

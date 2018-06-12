@@ -51,7 +51,6 @@ public:
 			t += 0.005;
 			ofNode::setGlobalPosition(pos);
 			ofNode::lookAt(getPos(radius, s, t + .4), normalize(pos));
-			
 			if (time > stay_time) changeState();
 
 		} break;
@@ -107,9 +106,9 @@ public:
 private:
 	vec3 getPos(float r, float s, float t) {
 		vec3 pos;
-		pos.x = radius * cos(t) * sin(s);
-		pos.y = radius * cos(s);
-		pos.z = radius * sin(t) * sin(s);
+		pos.x = r * cos(t) * sin(s);
+		pos.y = r * cos(s);
+		pos.z = r * sin(t) * sin(s);
 
 		return pos;
 	}

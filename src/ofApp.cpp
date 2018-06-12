@@ -2,19 +2,19 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-	
+
 	receiver.setup(7402);
 	ofSetFrameRate(60);
 	ofTrueTypeFont::setGlobalDpi(72);
 	ofEnableAntiAliasing();
-    ofToggleFullscreen();
-    
+	//ofToggleFullscreen();
+
 	sphere = make_shared<GHSphere>();
 	ui = make_shared<UILayer>();
 	sp = make_shared<SatelliteParticles>();
 
 	compositeFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA);
-	
+
 	cam.init();
 }
 
@@ -29,7 +29,7 @@ void ofApp::update() {
 		string event = msg.getArgAsString(0);
 		string actor = msg.getArgAsString(1);
 		string repo = msg.getArgAsString(2);
-		
+
 		ofFloatColor c = Palette::instance().colorMapping(event);
 
 		sp->add(event, actor, repo, c);
@@ -55,7 +55,7 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-	
+
 	ofBackgroundGradient(Palette::instance().bg, Palette::instance().bg_end, OF_GRADIENT_CIRCULAR);
 
 	compositeFbo.begin();
@@ -67,20 +67,20 @@ void ofApp::draw() {
 	ofEnableAlphaBlending();
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
 	sp->draw(cam, isNameVisible, isLabelVisible);
-	
+
 	// draw solid sphere
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 	sphere->draw(cam);
-	
+
 	cam.end();
 	compositeFbo.end();
 
 	ofDisableDepthTest();
 	compositeFbo.draw(0, 0);
 	if (isUiVisible) ui->draw();
-    
-    //ofDrawBitmapString("fps" + ofToString(ofGetFrameRate()), 12, ofGetHeight()-16);
-    
+
+	//ofDrawBitmapString("fps" + ofToString(ofGetFrameRate()), 12, ofGetHeight()-16);
+
 }
 
 //--------------------------------------------------------------
